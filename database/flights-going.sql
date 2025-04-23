@@ -1,0 +1,21 @@
+CREATE TABLE flightsgoing (
+  flightsgoingid INT PRIMARY KEY,
+  airlinesaeroplanesid INT NOT NULL,
+  departureairportid INT NOT NULL,
+  arrivalairportid INT NOT NULL,
+  flighttype VARCHAR(20) CHECK (flighttype IN ('Domestic','International')) NOT NULL,
+  arrivaldatetime TIMESTAMP NOT NULL,
+  departuredatetime TIMESTAMP NOT NULL,
+  destinationdistance INT NOT NULL,
+  arrivalterminalid INT NOT NULL,
+  departureterminalid INT NOT NULL,
+  arrivalrunwayid INT NOT NULL,
+  departurerunwayid INT NOT NULL,
+  FOREIGN KEY (airlinesaeroplanesid) REFERENCES airlinesaeroplanes(airlinesaeroplanesid),
+  FOREIGN KEY (departureairportid) REFERENCES airports(airportid),
+  FOREIGN KEY (arrivalairportid) REFERENCES airports(airportid),
+  FOREIGN KEY (arrivalterminalid) REFERENCES terminals(terminalsid),
+  FOREIGN KEY (departureterminalid) REFERENCES terminals(terminalsid),
+  FOREIGN KEY (arrivalrunwayid) REFERENCES runways(runwaysid),
+  FOREIGN KEY (departurerunwayid) REFERENCES runways(runwaysid)
+);

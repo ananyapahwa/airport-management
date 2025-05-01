@@ -1,4 +1,4 @@
-const cancelTicketsModel = require('../models/cancelTickets');
+const cancelTicketsModel = require('../../models/cancelTickets');
 
 async function createCancellation(req, res) {
   const { dateOfCancellation, surcharge } = req.body;

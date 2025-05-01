@@ -1,6 +1,8 @@
 const express = require('express');
 const oracledb = require('oracledb');
 const userRoutes = require('./routes/user');
+const cityRoutes = require('./routes/city');
+const airportRoutes = require('./routes/airport')
 const app = express();
 const port = 3000;
 
@@ -24,6 +26,8 @@ async function createPool() {
 
 // Use the user routes
 app.use('/api', userRoutes);
+app.use('/api/city', cityRoutes);
+app.use('/api/airport', airportRoutes);
 
 // Start the Express server
 createPool().then(() => {

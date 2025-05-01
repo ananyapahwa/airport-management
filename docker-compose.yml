@@ -1,0 +1,34 @@
+services:
+  oracle-db:
+    image: gvenzl/oracle-xe:21
+    container_name: oracle-xe
+    environment:
+      - ORACLE_PASSWORD=oracle  # Default password for system user
+      - ORACLE_DATABASE=XEPDB1  # Default database to connect to
+    ports:
+      - "1521:1521"  # Expose the Oracle DB port
+      - "5500:5500"  # Expose the Oracle DB management port (optional)
+    networks:
+      - app-network
+    volumes:
+      - oracle-data:/opt/oracle/oradata  # Persist Oracle data between container restarts
+
+  express-app:
+    build: .
+    container_name: express-app
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"  # Expose the Express app port
+    depends_on:
+      - oracle-db  # Ensure Oracle DB is up before the app starts
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  oracle-data:
+    driver: local

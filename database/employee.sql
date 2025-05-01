@@ -11,5 +11,5 @@ CREATE TABLE Employee (
     COUNTRY VARCHAR2(50),
     PHONE VARCHAR2(15),
     SALARY FLOAT,
-    JOB VARCHAR2(50) -- Consider making this a FK if you have a JOB table
+    JOB VARCHAR2(50) 
 );

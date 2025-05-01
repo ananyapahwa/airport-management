@@ -10,8 +10,11 @@ async function createCancellation(dateOfCancellation, surcharge) {
       INSERT INTO CANCEL_TICKETS (DATE_OF_CANCELLATION, SURCHARGE)
       VALUES (:dateOfCancellation, :surcharge)
     `;
-    await connection.execute(sql, [dateOfCancellation, surcharge]);
-    
+     await connection.execute(sql, {
+      dateOfCancellation: { val: new Date(dateOfCancellation), type: oracledb.DATE },
+      surcharge: { val: surcharge, type: oracledb.NUMBER }
+    });
+
     await connection.commit();
         
     return { message: "Cancellation record inserted successfully." };

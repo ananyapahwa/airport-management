@@ -4,7 +4,7 @@ const userRoutes = require('./routes/user');
 const cityRoutes = require('./routes/city');
 const airportRoutes = require('./routes/airport');
 const airlineRoutes = require('./routes/airline');
-const cancelTicketsRoutes = require('./routes/cancelTickets');
+const TicketsRoutes = require('./routes/ticket');
 const containsRoutes = require('./routes/contains');
 const servesRoutes = require('./routes/serves');
 
@@ -34,7 +34,7 @@ app.use('/api', userRoutes);
 app.use('/api/city', cityRoutes);
 app.use('/api/airport', airportRoutes);
 app.use('/api/airline', airlineRoutes);
-app.use('/api/cancellation', cancelTicketsRoutes);
+app.use('/api/ticket',TicketsRoutes);
 app.use('/api/contains', containsRoutes);
 app.use('/api/serves', servesRoutes);
 

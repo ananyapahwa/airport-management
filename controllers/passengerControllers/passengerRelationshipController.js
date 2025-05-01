@@ -1,4 +1,4 @@
-const model = require('../models/passengerRelationship');
+const model = require('../../models/passengerModels/passengerRelationship');
 
 async function createPassengerRelationship(req, res) {
   const { pid, passportno } = req.body;

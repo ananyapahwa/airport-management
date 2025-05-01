@@ -1,4 +1,4 @@
-const model = require('../models/passengerBooking');
+const model = require('../../models/passengerModels/passengerBooking');
 
 async function createPassengerBooking(req, res) {
   const { pid, flight_code } = req.body;

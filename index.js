@@ -1,6 +1,14 @@
 const express = require('express');
 const oracledb = require('oracledb');
 const userRoutes = require('./routes/user');
+const cityRoutes = require('./routes/city');
+const airportRoutes = require('./routes/airport');
+const airlineRoutes = require('./routes/airline');
+const TicketsRoutes = require('./routes/ticket');
+const containsRoutes = require('./routes/contains');
+const servesRoutes = require('./routes/serves');
+const passengerRoutes = require ('./routes/passenger')
+
 const app = express();
 const port = 3000;
 
@@ -24,6 +32,13 @@ async function createPool() {
 
 // Use the user routes
 app.use('/api', userRoutes);
+app.use('/api/city', cityRoutes);
+app.use('/api/airport', airportRoutes);
+app.use('/api/airline', airlineRoutes);
+app.use('/api/ticket',TicketsRoutes);
+app.use('/api/contains', containsRoutes);
+app.use('/api/serves', servesRoutes);
+app.use ('/api/passenger', passengerRoutes)
 
 // Start the Express server
 createPool().then(() => {

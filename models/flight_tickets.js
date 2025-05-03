@@ -35,6 +35,32 @@ module.exports = {
         `SELECT * FROM FLIGHT_TICKETS ORDER BY DATE_OF_TRAVEL`
       );
       return result.rows;
+    },
+  
+    getTicketByNumber: async (connection, ticketNumber) => {
+      const result = await connection.execute(
+        `SELECT * FROM FLIGHT_TICKETS WHERE TICKET_NUMBER = :ticketNumber`,
+        { ticketNumber }
+      );
+      return result.rows[0]; // Return the first (and should be only) result
+    },
+  
+    getTicketsByPassenger: async (connection, pid, passportno) => {
+      const result = await connection.execute(
+        `SELECT * FROM FLIGHT_TICKETS 
+         WHERE PID = :pid AND PASSPORTNO = :passportno
+         ORDER BY DATE_OF_TRAVEL`,
+        { pid, passportno }
+      );
+      return result.rows;
+    },
+  
+    deleteTicket: async (connection, ticketNumber) => {
+      await connection.execute(
+        `DELETE FROM FLIGHT_TICKETS WHERE TICKET_NUMBER = :ticketNumber`,
+        { ticketNumber },
+        { autoCommit: true }
+      );
     }
   };
   

@@ -1,11 +1,13 @@
 const express = require('express');
 const { createTicket } = require('../controllers/tickets/ticketDetails');
 const { createCancellation } = require('../controllers/tickets/TicketCancel');
+const { addFlightTicket } = require ('../controllers/tickets/flight_tickets')
 const ticketController = require('../controllers/tickets/get-tickets-sorted-by-date');
 
 const router = express.Router();
 
 router.post('/insert-ticket', createTicket);
+router.post('/insert-flight-ticket', addFlightTicket );
 router.post('/insert-cancellation', createCancellation);
 
 // Get all tickets sorted by date

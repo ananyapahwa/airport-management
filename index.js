@@ -8,6 +8,7 @@ const TicketsRoutes = require('./routes/ticket');
 const containsRoutes = require('./routes/contains');
 const servesRoutes = require('./routes/serves');
 const passengerRoutes = require ('./routes/passenger')
+const flightRoutes = require ('./routes/flight')
 
 const app = express();
 const port = 3000;
@@ -39,7 +40,7 @@ app.use('/api/ticket',TicketsRoutes);
 app.use('/api/contains', containsRoutes);
 app.use('/api/serves', servesRoutes);
 app.use ('/api/passenger', passengerRoutes)
-
+app.use ('/api/flight', flightRoutes)
 // Start the Express server
 createPool().then(() => {
   app.listen(port, () => {

@@ -1,22 +1,52 @@
 const oracledb = require('oracledb');
 
-async function createFlight(flight_number, departure_time, arrival_time, departure_city, arrival_city, aircraft_id) {
+async function insertFlight({
+  FLIGHT_CODE,
+  SOURCE,
+  DESTINATION,
+  ARRIVAL,
+  DEPARTURE,
+  STATUS,
+  DURATION,
+  FLIGHTTYPE,
+  LAYOVER_TIME,
+  NO_OF_STOPS,
+  AIRLINEID
+}) {
   let connection;
 
   try {
     connection = await oracledb.getConnection();
 
     const sql = `
-      INSERT INTO FLIGHT (FLIGHT_NUMBER, DEPARTURE_TIME, ARRIVAL_TIME, DEPARTURE_CITY, ARRIVAL_CITY, AIRCRAFT_ID)
-      VALUES (:flight_number, :departure_time, :arrival_time, :departure_city, :arrival_city, :aircraft_id)
+      INSERT INTO FLIGHT (
+        FLIGHT_CODE, SOURCE, DESTINATION, ARRIVAL, DEPARTURE,
+        STATUS, DURATION, FLIGHTTYPE, LAYOVER_TIME, NO_OF_STOPS, AIRLINEID
+      ) VALUES (
+        :FLIGHT_CODE, :SOURCE, :DESTINATION, :ARRIVAL, :DEPARTURE,
+        :STATUS, :DURATION, :FLIGHTTYPE, :LAYOVER_TIME, :NO_OF_STOPS, :AIRLINEID
+      )
     `;
-    await connection.execute(sql, [flight_number, departure_time, arrival_time, departure_city, arrival_city, aircraft_id]);
 
-    await connection.commit();
-    
+    const binds = {
+      FLIGHT_CODE,
+      SOURCE,
+      DESTINATION,
+      ARRIVAL,
+      DEPARTURE,
+      STATUS,
+      DURATION,
+      FLIGHTTYPE,
+      LAYOVER_TIME,
+      NO_OF_STOPS,
+      AIRLINEID
+    };
+
+    await connection.execute(sql, binds, { autoCommit: true });
+
     return { message: "Flight inserted successfully." };
   } catch (err) {
-    console.error("Error in createFlight model:", err);
+    console.error("Error in insertFlight model:", err);
     throw err;
   } finally {
     if (connection) {
@@ -25,4 +55,4 @@ async function createFlight(flight_number, departure_time, arrival_time, departu
   }
 }
 
-module.exports = { createFlight }; 
+module.exports = { insertFlight };

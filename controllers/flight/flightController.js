@@ -1,14 +1,43 @@
-const flightModel = require('../models/flight');
+const flightModel = require('../../models/flightModels/flight');
 
 async function createFlight(req, res) {
-  const { flight_number, departure_time, arrival_time, departure_city, arrival_city, aircraft_id } = req.body;
+  const {
+    FLIGHT_CODE,
+    SOURCE,
+    DESTINATION,
+    ARRIVAL,
+    DEPARTURE,
+    STATUS,
+    DURATION,
+    FLIGHTTYPE,
+    LAYOVER_TIME,
+    NO_OF_STOPS,
+    AIRLINEID
+  } = req.body;
 
-  if (!flight_number || !departure_time || !arrival_time || !departure_city || !arrival_city || !aircraft_id) {
+  // Validation
+  if (
+    !FLIGHT_CODE || !SOURCE || !DESTINATION || !ARRIVAL || !DEPARTURE ||
+    !STATUS || !DURATION || !FLIGHTTYPE || NO_OF_STOPS === undefined || !AIRLINEID
+  ) {
     return res.status(400).json({ error: 'All fields are required.' });
   }
 
   try {
-    const result = await flightModel.createFlight(flight_number, departure_time, arrival_time, departure_city, arrival_city, aircraft_id);
+    const result = await flightModel.insertFlight({
+      FLIGHT_CODE,
+      SOURCE,
+      DESTINATION,
+      ARRIVAL,
+      DEPARTURE,
+      STATUS,
+      DURATION,
+      FLIGHTTYPE,
+      LAYOVER_TIME,
+      NO_OF_STOPS,
+      AIRLINEID
+    });
+
     res.status(201).json({ message: result.message });
   } catch (err) {
     console.error("Error in createFlight controller:", err);
@@ -16,4 +45,4 @@ async function createFlight(req, res) {
   }
 }
 
-module.exports = { createFlight }; 
+module.exports = { createFlight };

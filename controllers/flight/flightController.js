@@ -24,7 +24,7 @@ async function createFlight(req, res) {
   }
 
   try {
-    const result = await flightModel.insertFlight({
+    const result = await flightModel.createFlight({
       FLIGHT_CODE,
       SOURCE,
       DESTINATION,
@@ -45,4 +45,39 @@ async function createFlight(req, res) {
   }
 }
 
-module.exports = { createFlight };
+async function getFlight(req, res) {
+  const { flight_id } = req.params;
+
+  if (!flight_id) {
+    return res.status(400).json({ error: 'Flight ID is required.' });
+  }
+
+  try {
+    const flight = await flightModel.getFlight(flight_id);
+    if (!flight) {
+      return res.status(404).json({ error: 'Flight not found.' });
+    }
+    res.status(200).json(flight);
+  } catch (err) {
+    console.error("Error in getFlight controller:", err);
+    res.status(500).json({ error: 'An error occurred while fetching flight data.' });
+  }
+} 
+
+async function getAllFlightsForAnAirline(req, res) {
+  const { airline_id } = req.params;
+
+  if (!airline_id) {
+    return res.status(400).json({ error: 'Airline ID is required.' });
+  }
+
+  try {
+    const flights = await flightModel.getAllFlightsForAnAirline(airline_id);
+    res.status(200).json(flights);
+  } catch (err) {
+    console.error("Error in getAllFlightsForAnAirline controller:", err);
+    res.status(500).json({ error: 'An error occurred while fetching flights for an airline.' });
+  }
+}
+
+module.exports = { createFlight, getFlight, getAllFlightsForAnAirline };

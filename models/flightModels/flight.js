@@ -1,6 +1,6 @@
 const oracledb = require('oracledb');
 
-async function insertFlight({
+async function createFlight({
   FLIGHT_CODE,
   SOURCE,
   DESTINATION,
@@ -55,4 +55,52 @@ async function insertFlight({
   }
 }
 
-module.exports = { insertFlight };
+async function getFlight(flight_id) {
+  let connection;
+
+  try {
+    connection = await oracledb.getConnection();
+
+    const sql = `
+      SELECT * FROM FLIGHT
+      WHERE FLIGHT_ID = :flight_id
+    `;
+
+    const result = await connection.execute(sql, [flight_id]);
+
+    return result.rows[0];
+  } catch (err) {
+    console.error("Error in getFlight model:", err);
+    throw err;
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
+  }
+}
+
+async function getAllFlightsForAnAirline(airline_id) {
+  let connection;
+
+  try {
+    connection = await oracledb.getConnection();
+
+    const sql = `
+      SELECT * FROM FLIGHT
+      WHERE AIRLINE_ID = :airline_id
+    `;
+
+    const result = await connection.execute(sql, [airline_id]);
+
+    return result.rows;
+  } catch (err) {
+    console.error("Error in getAllFlightsForAnAirline model:", err);
+    throw err;
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
+  }
+}
+
+module.exports = { createFlight, getFlight, getAllFlightsForAnAirline };

@@ -16,4 +16,15 @@ async function createAirline(req, res) {
   }
 }
 
-module.exports = { createAirline };
+async function getAllAirlines(req, res) {
+  try {
+    const airlines = await airlineModel.getAllAirlines();
+    res.status(200).json(airlines);
+  } catch (err) {
+    console.error("Error in getAllAirlines controller:", err);
+    res.status(500).json({ error: 'An error occurred while fetching airlines.' });
+  }
+}
+
+
+module.exports = { createAirline, getAllAirlines };

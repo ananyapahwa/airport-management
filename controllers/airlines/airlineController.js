@@ -1,4 +1,4 @@
-const airlineModel = require('../models/airline');
+const airlineModel = require('../../models/airline');
 
 async function createAirline(req, res) {
   const { airlineId, alName, threeDigitCode } = req.body;

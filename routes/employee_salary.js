@@ -5,6 +5,6 @@ const {
 
 const router = express.Router();
 
-router.post('/create', createEmployeeSalary);
+router.post('/create-employee-salary', createEmployeeSalary);
 
 module.exports = router;

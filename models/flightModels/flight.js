@@ -103,4 +103,30 @@ async function getAllFlightsForAnAirline(airline_id) {
   }
 }
 
-module.exports = { createFlight, getFlight, getAllFlightsForAnAirline };
+async function getAllFlightsForAnAirport(airport_id) {
+  let connection;
+
+  try {
+    connection = await oracledb.getConnection();
+
+    const sql = `
+      SELECT * FROM FLIGHT
+      WHERE DEPARTURE_AIRPORT = :airport_id OR ARRIVAL_AIRPORT = :airport_id
+    `;
+
+    const result = await connection.execute(sql, [airport_id]);
+
+    return result.rows;
+  } catch (err) {
+    console.error("Error in getAllFlightsForAnAirport model:", err);
+    throw err;
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
+  }
+}
+
+
+
+module.exports = { createFlight, getFlight, getAllFlightsForAnAirline, getAllFlightsForAnAirport };

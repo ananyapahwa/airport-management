@@ -80,4 +80,22 @@ async function getAllFlightsForAnAirline(req, res) {
   }
 }
 
-module.exports = { createFlight, getFlight, getAllFlightsForAnAirline };
+async function getAllFlightsForAnAirport(req, res) {
+  const { airport_id } = req.params;
+
+  if (!airport_id) {
+    return res.status(400).json({ error: 'Airport ID is required.' });
+  }
+
+  try {
+    const flights = await flightModel.getAllFlightsForAnAirport(airport_id);
+    res.status(200).json(flights);
+  } catch (err) {
+    console.error("Error in getAllFlightsForAnAirport controller:", err);
+    res.status(500).json({ error: 'An error occurred while fetching flights for an airport.' });
+  }
+}
+
+
+
+module.exports = { createFlight, getFlight, getAllFlightsForAnAirline, getAllFlightsForAnAirport };

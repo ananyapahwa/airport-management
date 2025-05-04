@@ -16,5 +16,14 @@ async function createAirport(req, res) {
     res.status(500).json({ error: 'An error occurred while inserting airport data.' });
   }
 }
+async function getAllAirports(req, res) {
+  try {
+    const airports = await airportModel.getAllAirports();
+    res.status(200).json(airports);
+  } catch (err) {
+    console.error("Error in getAllAirports controller:", err);
+    res.status(500).json({ error: 'An error occurred while fetching airports.' });
+  }
+}
 
-module.exports = { createAirport };
+module.exports = { createAirport, getAllAirports };

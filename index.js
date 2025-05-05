@@ -9,6 +9,7 @@ const servesRoutes = require('./routes/serves');
 const passengerRoutes = require ('./routes/passenger')
 const flightRoutes = require ('./routes/flight')
 const employeeDetailRoute = require('./routes/employee_details')
+const sqlQueryRoutes = require ('./routes/sql-queries')
 
 const app = express();
 const port = 3000;
@@ -41,6 +42,7 @@ app.use('/api/serves', servesRoutes);
 app.use ('/api/passenger', passengerRoutes)
 app.use ('/api/flight', flightRoutes)
 app.use('/api/employee', employeeDetailRoute);
+app.use('/api/query', sqlQueryRoutes);
 
 // Start the Express server
 createPool().then(() => {
